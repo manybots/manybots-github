@@ -1,0 +1,30 @@
+<div class="clearfix" style="margin-bottom: 20px;">
+  <%= image_tag('manybots-github/icon.png', :align => :left, :width => 40, :style=> 'margin-right: 10px;') %>
+  <h2>Github Observer</h2>
+</div>
+
+<%- @githubs.each do |github| -%>
+  <div class="card">
+    <h4>
+      <%= github.remote_account_id %> 
+      <span class="meta">
+        <%= link_to 'Delete', github_path(github.id), :method => :delete, :confirm => 'Are you sure?', :class => '' %>
+      </span>
+    </h4>
+
+    <%- if @schedules and @schedules.keys.include?("import_manybots_github_repositories_#{github.id}") -%> 
+      <p>Importing commits and pushes from <strong><%= github.remote_account_id %></strong> every 30 minutes</p>
+      <p><%= link_to 'Stop importing', import_github_path(github.id), :method => :post, :confirm => 'Sure?' %> </p>
+    <%- else -%>
+    
+      <%= form_tag import_github_path(github.id), :method => :post, :class => 'clearfix' do %>    
+        <p class="button save" style="float:left;margin: 0 5px 0 0;">
+          <%= submit_tag 'Start importing', :id => 'submit'%> 
+        </p>
+        <span class="meta" style="line-height: 32px;">and refresh every 30 minutes.</span>
+      <%- end -%>
+    <%- end -%>
+    <p></p>
+  </div>
+<%- end -%>
+<p><%= link_to 'Register a Github account', new_github_path %></p>

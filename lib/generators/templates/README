@@ -1,0 +1,15 @@
+==============
+
+Great! Github Observer for Manybots has been installed.
+
+Now what?
+
+1. Run `bundle exec rake db:migrate` to get your db up to speed
+2. Edit `config/initializers/manybots-github.rb` to use your app id and 
+secret (more info in the `README` file)
+3. Go to `/manybots-github` and start collecting your commits (you might have to relaunch the server)
+
+You can find help on the Manybots Dev mailing list.
+https://www.manybots.com/developers
+
+==============
