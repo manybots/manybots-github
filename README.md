@@ -14,10 +14,9 @@ You need the latest version of Manybots Local running on your system. Open your 
 First, require the gem: edit your `Gemfile`, add the following, and run `bundle install`
 
 ```
-gem 'manybots-github'
-gem 'octokit'
+gem 'manybots-github', :git => 'git://github.com/manybots/manybots-github.git'
+gem 'octokit', '1.0.0', :git => 'git://github.com/webcracy/octokit.git'
 ```
-
 
 Second, run the manybots-github install generator (mind the underscore):
 
