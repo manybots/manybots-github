@@ -1,14 +1,16 @@
 class GithubWorker
   @queue = :observers
   
-  attr_accessor :client, :github_account_id, :github_account, :github_user
+  attr_accessor :client, :github_account_id, :github_account, :github_user, :auto_traversal_for_commits
   
-  def initialize(github_account_id)
+  def initialize(github_account_id, auto_traversal_for_commits=false)
     @github_account_id = github_account_id
     @github_account = OauthAccount.find(@github_account_id)
     @github_user = github_account.remote_account_id
     github_token = github_account.token
     @client = Octokit::Client.new(:login => @github_user, :oauth_token => github_token)
+    @auto_traversal_for_commits = auto_traversal_for_commits
+    puts "auto_traversal_for_commits is: #{@auto_traversal_for_commits}" 
   end
   
   def fetch_push_events
@@ -33,7 +35,7 @@ class GithubWorker
   def fetch_all_commits(repo, branch='master')
     repo_name = repo.is_a?(String) ? repo : "#{repo.owner.login}/#{repo.name}"
     branch_name = branch.is_a?(String) ? branch : branch.name
-    @client.auto_traversal = true
+    @client.auto_traversal = @auto_traversal_for_commits
     commits = @client.commits repo_name, branch_name
     # only return commits from the current user
     commits.group_by{|c| c.author.login rescue(nil)}.delete_if{|k,v| k != @github_user}[@github_user]
@@ -62,7 +64,6 @@ class GithubWorker
   end
   
   def self.perform(options={})
-    puts options.inspect
     github_account_id = options.delete('oauth_account_id') || raise("Need an OauthAccount id.")
     what = options.delete('type') || 'repos'
     repo_id = options.delete('repo') || nil
@@ -73,9 +74,7 @@ class GithubWorker
       client.import_repos!
     elsif what == 'commits'
       repo = ManybotsGithub::Repository.find(repo_id)
-      puts repo.slug
       branches = client.fetch_all_branches(repo.slug)
-      puts branches.inspect
       branches.each do |branch|
         commits = repo.commits_from_github(branch.name)
         commits.each do |commit|

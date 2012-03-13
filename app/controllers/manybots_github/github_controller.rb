@@ -39,7 +39,7 @@ module ManybotsGithub
           :description => "Update repositories every 30 minutes for OauthAccount ##{github.id}"
         }
         
-        ManybotsServer.queue.enqueue(GithubWorker, {oauth_account_id: github.id, type: 'repos'})
+        ManybotsServer.queue.enqueue(GithubWorker, {oauth_account_id: github.id, type: 'repos'}, true)
       end
       github.save
       
