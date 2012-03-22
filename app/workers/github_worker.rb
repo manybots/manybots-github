@@ -63,12 +63,12 @@ class GithubWorker
     end unless repositories.empty?
   end
   
-  def self.perform(options={})
+  def self.perform(options={}, autotraversal=false)
     github_account_id = options.delete('oauth_account_id') || raise("Need an OauthAccount id.")
     what = options.delete('type') || 'repos'
     repo_id = options.delete('repo') || nil
     
-    client = GithubWorker.new(github_account_id)
+    client = GithubWorker.new(github_account_id, autotraversal)
     
     if what == 'repos'
       client.import_repos!
