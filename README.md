@@ -31,7 +31,7 @@ Now you need to register your Github Observer with Github.
 
 Your Github Observer uses OAuth to authorize you (and/or your other Manybots Local users) with Github. 
 
-1. Go to this link: https://github.com/account/applications/new
+1. Go to this link: https://github.com/settings/applications/new
 
 2. Enter information like described in the screenshot below. The URL must be the one of your Manybots Local installation.
 
