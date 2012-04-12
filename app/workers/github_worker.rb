@@ -1,3 +1,5 @@
+require 'octokit'
+
 class GithubWorker
   @queue = :observers
   
@@ -23,7 +25,7 @@ class GithubWorker
   
   def fetch_all_repos
     @client.auto_traversal = true
-    @client.repos
+    (@client.repos + @client.orgs.collect{|org| @client.org_repos(org.login) }).flatten
   end
   
   def fetch_all_branches(repo)
