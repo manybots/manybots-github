@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.email       = ["alex@webcracy.org"]
   s.homepage    = "https://www.manybots.com"
   s.summary     = "Add a Github Observer to your local Manybots."
-  s.description = "Allows you to import your emails from Gmail into your local Manybots."
+  s.description = "Allows you to import your commits to Github into your local Manybots."
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
   s.test_files = Dir["test/**/*"]
