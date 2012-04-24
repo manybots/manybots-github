@@ -11,7 +11,7 @@ webcracy commit to webcracy/manybots-github - first commit (SHA)
 
 You need the latest version of Manybots Local running on your system. Open your Terminal and `cd` into its' directory.
 
-First, require the gem: edit your `Gemfile`, add the following, and run `bundle install`
+First, require the gem: edit your `Botfile`, add the following, and run `bundle install`
 
 ```
 gem 'manybots-github', :git => 'git://github.com/manybots/manybots-github.git'
